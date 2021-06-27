@@ -14,18 +14,34 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                ForEach(emojis[0..<cardsCount], id: \.self) { emoji in
-                    CardView(content: emoji)
-                }
-            }.padding(.all)
-            .foregroundColor(.red)
+            ScrollView{
+                LazyVGrid(columns: [
+                    GridItem(), GridItem(), GridItem()
+                ]) {
+                    ForEach(emojis[0..<cardsCount], id: \.self) { emoji in
+                        CardView(content: emoji)
+                            .aspectRatio(2/3, contentMode: .fill)
+                    }
+                }.padding(.all)
+                .foregroundColor(.red)
+            }
+            Spacer()
             HStack{
-                addButton
-                Spacer()
                 removeButton
+                Spacer()
+                addButton
             }.font(.largeTitle)
             .padding(.horizontal)
+        }
+    }
+    
+    var removeButton: some View {
+        Button {
+            if(cardsCount > 1){
+                cardsCount -= 1
+            }
+        } label: {
+            Image(systemName: "minus.circle")
         }
     }
     
@@ -36,18 +52,8 @@ struct ContentView: View {
             }
         }, label: {
             // Using SF Symbols
-            Image(systemName: "minus.circle")
-        })
-    }
-    
-    var removeButton: some View {
-        Button {
-            if(cardsCount > 1){
-                cardsCount -= 1
-            }
-        } label: {
             Image(systemName: "plus.circle")
-        }
+        })
     }
 }
 
@@ -60,7 +66,8 @@ struct CardView: View {
             let shape = RoundedRectangle(cornerRadius: 25.0)
             if(isFaceUp){
                 shape.fill().foregroundColor(.white)
-                shape.stroke(lineWidth: 3.0)
+                //shape.stroke(lineWidth: 3.0)
+                shape.strokeBorder(lineWidth: 3.0)
                 Text(content)
                     .font(.largeTitle)
                     .foregroundColor(Color.purple)
