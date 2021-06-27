@@ -16,7 +16,7 @@ struct ContentView: View {
         VStack {
             ScrollView{
                 LazyVGrid(columns: [
-                    GridItem(), GridItem(), GridItem()
+                    GridItem(.adaptive(minimum: 80))
                 ]) {
                     ForEach(emojis[0..<cardsCount], id: \.self) { emoji in
                         CardView(content: emoji)
@@ -83,7 +83,9 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+        }
         
         ContentView()
             .preferredColorScheme(.dark)
