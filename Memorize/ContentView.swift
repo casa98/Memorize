@@ -9,21 +9,44 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        return ZStack(alignment: .bottom) {
-            Text("Hello, World!")
-                .foregroundColor(Color.purple)
-                .padding(.all)
-             
-            RoundedRectangle(cornerRadius: 25.0)
-                .stroke(Color.red, lineWidth: 4.0)
+        HStack {
+            
+            CardView()
+            CardView(isFaceUp: false)
+            CardView(isFaceUp: false)
+            CardView(isFaceUp: true)
+
+        }.padding(.all)
+        .foregroundColor(.red)
+    }
+}
+
+struct CardView: View {
+    var isFaceUp: Bool = true
+    var body: some View {
+        ZStack(alignment: .center) {
+            let shape = RoundedRectangle(cornerRadius: 25.0)
+            if(isFaceUp){
+                shape.fill().foregroundColor(.white)
+                shape.stroke(lineWidth: 3.0)
+                Text("😄")
+                    .font(.largeTitle)
+                    .foregroundColor(Color.purple)
+                    .padding(.all)
+            }else{
+                shape.fill()
+            }
+            
             
         }
-        .padding(.horizontal, 50.0)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        
+        ContentView()
+            .preferredColorScheme(.dark)
     }
 }
