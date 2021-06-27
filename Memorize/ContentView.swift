@@ -8,15 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["😊", "🥰", "😍", "😏"]
+    var emojis = ["😊", "🥰", "😍", "😏", "😀", "😁", "😅", "😂", "🥲", "🤣", "😇", "🙃", "😛", "🤪", "🤨", "🤓", "😎", "🥸", "🤩", "🥳", "🤮", "🤠", "🤬", "😈"]
+    
+    @State var cardsCount: Int = 4
     
     var body: some View {
-        HStack {
-            ForEach(emojis, id: \.self) { emoji in
-                CardView(content: emoji)
+        VStack {
+            HStack {
+                ForEach(emojis[0..<cardsCount], id: \.self) { emoji in
+                    CardView(content: emoji)
+                }
+            }.padding(.all)
+            .foregroundColor(.red)
+            HStack{
+                addButton
+                Spacer()
+                removeButton
+            }.font(.largeTitle)
+            .padding(.horizontal)
+        }
+    }
+    
+    var addButton: some View {
+        Button(action: {
+            if(cardsCount < emojis.count){
+                cardsCount += 1
             }
-        }.padding(.all)
-        .foregroundColor(.red)
+        }, label: {
+            // Using SF Symbols
+            Image(systemName: "minus.circle")
+        })
+    }
+    
+    var removeButton: some View {
+        Button {
+            if(cardsCount > 1){
+                cardsCount -= 1
+            }
+        } label: {
+            Image(systemName: "plus.circle")
+        }
     }
 }
 
@@ -33,7 +64,6 @@ struct CardView: View {
                 Text(content)
                     .font(.largeTitle)
                     .foregroundColor(Color.purple)
-                    .padding(.all)
             }else{
                 shape.fill()
             }
