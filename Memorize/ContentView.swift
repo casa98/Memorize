@@ -22,7 +22,8 @@ struct ContentView: View {
 }
 
 struct CardView: View {
-    var isFaceUp: Bool = true
+    @State var isFaceUp: Bool = true
+
     var body: some View {
         ZStack(alignment: .center) {
             let shape = RoundedRectangle(cornerRadius: 25.0)
@@ -36,8 +37,9 @@ struct CardView: View {
             }else{
                 shape.fill()
             }
-            
-            
+        }.onTapGesture {
+            // View modifier for each entire card
+            isFaceUp = !isFaceUp;
         }
     }
 }
